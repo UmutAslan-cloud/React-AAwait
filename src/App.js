@@ -1,25 +1,33 @@
-import logo from './logo.svg';
+import React, {useState,useEffect} from "react"
 import './App.css';
 
-function App() {
+const App=()=>{
+  const API_URL='https://api.chucknorris.io/jokes/random'
+
+  const [recipes,setRecipes]=useState([]);
+  useEffect(()=>{
+    loadData();
+  },[]);
+  const loadData=async()=>{
+    const response=await fetch(API_URL)
+    const data=await response.json();
+    setRecipes(data);
+    console.log(data)
+  }
+ 
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+{
+  <div>
+    <ul>
+      <li><img src={`${recipes.icon_url}`}></img></li>
+      <li key={recipes.id}>{recipes.value}</li>
+    </ul>
+    
     </div>
-  );
+} 
+    </div>
+  )
 }
 
 export default App;
